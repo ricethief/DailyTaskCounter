@@ -8,7 +8,112 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="#615F5F">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" FontWeight="Bold" 
+               Text="Task Counter v1.0" HorizontalAlignment="Left" VerticalAlignment="top" Margin="10" Foreground="#B7B7B7" FontSize="9" FontFamily="Cooper Black"/>
+
+        <CalendarDatePicker x:Name="datePicker" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <Grid x:Name="title" Grid.Row="1" Background="#3B3B3B">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" FontWeight="Bold" 
+               Text="TASK" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center" Foreground="#B7B7B7" FontSize="25"/>
+            <TextBlock Grid.Column="1" FontWeight="Bold" 
+               Text="ACTION" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#B7B7B7" FontSize="25"/>
+            <TextBlock Grid.Column="2" FontWeight="Bold" 
+               Text="COUNT" HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center" Foreground="#B7B7B7" FontSize="25"/>
+        </Grid>
+
+
+        <Grid x:Name="FormLayoutGrid" Grid.Row="2" Grid.Column="0" Background="#AAAAAA">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="CALL" Margin="10" Foreground="#615F5F" FontSize="25"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" />
+            <Button x:Name="CallSubtractBTN" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#FF6E6E" Content="-" Foreground="White" FontFamily="Cooper Black" 
+                    FontSize="30"  Margin="0,0,0,0" BorderBrush="#615F5F" Height="50" Width="50" FontWeight="Bold" Click="CallSubtractBTN_Click"/>
+            <Button x:Name="CallAddBTN" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#53A3FF" Content="+" Foreground="White" FontFamily="Cooper Black"
+                    FontSize="30"  Margin="0,0,0,0" BorderBrush="#615F5F" Height="50" Width="50" FontWeight="Bold" Click="CallAddBTN_Click"/>
+            <TextBlock x:Name="CallCountLable" Grid.Row="0" Grid.Column="3" Text="0" Margin="10" Foreground="#615F5F" FontSize="25"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="REACHED" Margin="10" Foreground="#615F5F" FontSize="25"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
+            <Button x:Name="ReachedSubtractBTN" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#FF6E6E" Content="-" Foreground="White" FontFamily="Cooper Black" 
+                    FontSize="30"  Margin="0,0,0,0" BorderBrush="#615F5F" Height="50" Width="50" FontWeight="Bold" Click="ReachedSubtractBTN_Click"/>
+            <Button x:Name="ReachedAddBTN" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#53A3FF" Content="+" Foreground="White" FontFamily="Cooper Black"
+                    FontSize="30"  Margin="0,0,0,0" BorderBrush="#615F5F" Height="50" Width="50" FontWeight="Bold" Click="ReachedAddBTN_Click"/>
+            <TextBlock x:Name="ReachedCountLable" Grid.Row="1" Grid.Column="3" Text="0" Margin="10" Foreground="#615F5F" FontSize="25"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="APPOIN&#x0a;TMENT" Margin="10" Foreground="#615F5F" FontSize="25"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
+            <Button x:Name="AppointmentSubtractBTN" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#FF6E6E" Content="-" Foreground="White" FontFamily="Cooper Black" 
+                    FontSize="30"  Margin="0,0,0,0" BorderBrush="#615F5F" Height="50" Width="50" FontWeight="Bold" Click="AppointmentSubtractBTN_Click"/>
+            <Button x:Name="AppointmentAddBTN" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#53A3FF" Content="+" Foreground="White" FontFamily="Cooper Black" 
+                    FontSize="30"  Margin="0,0,0,0" BorderBrush="#615F5F" Height="50" Width="50" FontWeight="Bold" Click="AppointmentAddBTN_Click"/>
+            <TextBlock x:Name="AppointmentCountLable" Grid.Row="2" Grid.Column="3" Text="0" Margin="10" Foreground="#615F5F" FontSize="25"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Segoe UI" />
+        </Grid>
+
+
+        <Grid Grid.Row="3" Background="#AAAAAA">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="0.7*" />
+                <ColumnDefinition Width="0.3*" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="PROGRESS" Margin="10" Foreground="White" FontSize="30"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FocusVisualPrimaryBrush="White"/>
+            <TextBlock x:Name="ProgressLable" Grid.Row="0" Grid.Column="1" Text="0" Margin="10" Foreground="White" FontSize="30"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Cooper Black"/>
+            <TextBlock  Grid.Row="0" Grid.Column="3" Text="%" Margin="10" Foreground="White" FontSize="30"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Cooper Black"/>
+        </Grid>
+        <Grid Grid.Row="4"  Background="#AAAAAA">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="SaveSessionBTN" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#53A3FF" Content="Save The Session" Foreground="White" 
+                    FontSize="30"  Margin="10" BorderBrush="#615F5F"  FontWeight="Bold"/>
+            <Button x:Name="ResetBTN" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Background="#FF6E6E" Content="Reset" Foreground="White" 
+                    FontSize="30"  Margin="10" BorderBrush="#615F5F"  FontWeight="Bold" Click="ResetBTN_Click"/>
+        </Grid>
+
 
     </Grid>
+
 </Page>
