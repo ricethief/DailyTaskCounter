@@ -24,23 +24,22 @@ namespace DailyTaskCounter
         private decimal reached;
         private decimal appointment;
         private decimal progress;
-
-
+      
 
         public MainPage()
         {
-
             this.InitializeComponent();
-            date = DateTime.Now.Date.ToString();
-            datePicker.Date = Convert.ToDateTime(date);
+            date = DateTime.Now.Date.ToString("M/d/yyyy");
             dbAccess();
-           // getDataFromDate(date);
-
+            getDataFromDate(date);
+            dumpDBtoMemory();
         }
-        private void datePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        private void datetimePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
         {
-            //getDataFromDate(date);
-            date = datePicker.Date.ToString();
+            Reset();
+            date = datetimepicker.Date.ToString("d");
+            getDataFromDate(date);
+            dumpDBtoMemory();
         }
         private void CallAddBTN_Click(object sender, RoutedEventArgs e)
         {
@@ -126,15 +125,7 @@ namespace DailyTaskCounter
         }
         private void ResetBTN_Click(object sender, RoutedEventArgs e)
         {
-            //Reset();
-            getDataFromDate(date);
-            foreach (var item in taskCounters)
-            {
-                AppointmentCountLable.Text = item.appointment.ToString();
-                CallCountLable.Text = item.callcount.ToString();
-                ReachedCountLable.Text = item.reached.ToString();
-                ProgressLable.Text = item.progress.ToString();
-            }
+            Reset();
         }
         public void Reset()
         {
@@ -145,7 +136,7 @@ namespace DailyTaskCounter
             CallCountLable.Text = callcount.ToString();
             ReachedCountLable.Text = reached.ToString();
             AppointmentCountLable.Text = appointment.ToString();
-            ProgressLable.Text = progress.ToString();
+            ProgressLable.Text = progress.ToString(("F"));
         }
         private void SaveSessionBTN_Click(object sender, RoutedEventArgs e)
         {
@@ -160,24 +151,12 @@ namespace DailyTaskCounter
         }
         public void getDataFromDate (string _date)
         {
-            // var data = from d in conn.Table<TaskCounter>() where d.date.Equals(_date) select d;
-            //var query = conn.Table<TaskCounter>().Where(v => v.date.StartsWith(_date));
-            //var query = conn.Table<TaskCounter>().Where(v => v.date.StartsWith(_date));
+
             var query = from task in conn.Table<TaskCounter>() where task.date == _date select task;
             foreach (var task in query)
             {
                 taskCounters.Add(task);
             }
-
-            //var query = conn.Table<TaskCounter>().Where(d =>d.date);
-            //  //  Query<TaskCounter>("SELECT * FROM TaskCounter Where date = " + date, conn);
-            //foreach (var taskCounter in query)
-            //{
-            //    TaskCounter t1 = new TaskCounter(taskCounter.date, taskCounter.callcount,
-            //        taskCounter.reached, taskCounter.appointment, taskCounter.progress);
-            //    callcount = t1.callcount;
-            //}
-
         }
         public void dbAccess()
         {
@@ -185,6 +164,22 @@ namespace DailyTaskCounter
             conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
             conn.CreateTable<TaskCounter>();
         }
+        public void dumpDBtoMemory()
+        {
+            foreach (var item in taskCounters.Where(d => d.date == date) )
+            {
+                this.callcount = item.callcount;
+                this.reached = item.reached;
+                this.appointment = item.appointment;
+                this.progress = item.progress;
+
+                CallCountLable.Text = callcount.ToString();
+                ReachedCountLable.Text = reached.ToString();
+                AppointmentCountLable.Text = appointment.ToString();
+                ProgressLable.Text = progress.ToString(("F"));
+            }
+        }
+
 
     }
 }

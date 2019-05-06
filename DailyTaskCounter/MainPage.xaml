@@ -20,7 +20,12 @@
         <TextBlock Grid.Column="0" FontWeight="Bold" 
                Text="Task Counter v1.0" HorizontalAlignment="Left" VerticalAlignment="top" Margin="10" Foreground="#B7B7B7" FontSize="9" FontFamily="Cooper Black"/>
 
-        <CalendarDatePicker x:Name="datePicker" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" DateChanged="datePicker_DateChanged" />
+       
+        <DatePicker x:Name="datetimepicker" Grid.Row="0" Grid.Column="0"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" 
+                             FontStyle="Normal"
+                            FontStretch="Undefined" Visibility="Visible" RequestedTheme="Dark" 
+                            BorderThickness="4,4,4,4" DateChanged="datetimePicker_DateChanged"/>
 
         <Grid x:Name="title" Grid.Row="1" Background="#3B3B3B">
             <Grid.ColumnDefinitions>
@@ -61,7 +66,7 @@
                     FontSize="30"  Margin="0,0,0,0" BorderBrush="#615F5F" Height="50" Width="50" FontWeight="Bold" Click="CallAddBTN_Click"/>
             <TextBlock x:Name="CallCountLable" Grid.Row="0" Grid.Column="3" Text="0" Margin="10" Foreground="#615F5F" FontSize="25"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
-            
+
             <TextBlock Grid.Row="1" Grid.Column="0" Text="REACHED" Margin="10" Foreground="#615F5F" FontSize="25"
                    HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
             <Button x:Name="ReachedSubtractBTN" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -92,7 +97,7 @@
                 <ColumnDefinition Width="0.7*" />
                 <ColumnDefinition Width="0.3*" />
             </Grid.ColumnDefinitions>
-            
+
             <TextBlock Grid.Row="0" Grid.Column="0" Text="PROGRESS" Margin="10" Foreground="White" FontSize="30"
                    HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FocusVisualPrimaryBrush="White"/>
             <TextBlock x:Name="ProgressLable" Grid.Row="0" Grid.Column="1" Text="0" Margin="10" Foreground="White" FontSize="30"
