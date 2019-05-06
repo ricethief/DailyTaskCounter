@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using DailyTaskCounter.Model;
 using System.Linq;
+using Windows.UI.Popups;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -123,9 +124,18 @@ namespace DailyTaskCounter
             }
             else ProgressLable.Text = "0";
         }
-        private void ResetBTN_Click(object sender, RoutedEventArgs e)
+        private async void ResetBTN_Click(object sender, RoutedEventArgs e)
         {
-            Reset();
+            var message = new MessageDialog("Are you sure you want to Reset");
+            message.Commands.Add(new UICommand("OK",null));
+            message.Commands.Add(new UICommand("CANCEL",null));
+            message.DefaultCommandIndex = 0;
+            message.CancelCommandIndex = 1;
+            var cmd = await message.ShowAsync();
+            if (cmd.Label == "OK")
+            {
+                Reset();
+            }
         }
         public void Reset()
         {
@@ -138,8 +148,12 @@ namespace DailyTaskCounter
             AppointmentCountLable.Text = appointment.ToString();
             ProgressLable.Text = progress.ToString(("F"));
         }
-        private void SaveSessionBTN_Click(object sender, RoutedEventArgs e)
+        private async void SaveSessionBTN_Click(object sender, RoutedEventArgs e)
         {
+            var message = new MessageDialog("Session Saved");
+            message.Commands.Add(new UICommand("OK"));
+            await message.ShowAsync();
+
             var add = conn.InsertOrReplace(new TaskCounter()
             {
                 date = date,
@@ -179,7 +193,6 @@ namespace DailyTaskCounter
                 ProgressLable.Text = progress.ToString(("F"));
             }
         }
-
-
+        
     }
 }
