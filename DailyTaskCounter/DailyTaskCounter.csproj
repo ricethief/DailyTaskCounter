@@ -95,7 +95,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\ApplicationDBContext.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -129,6 +128,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Dapper">
+      <Version>1.60.6</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Data.Sqlite">
       <Version>1.1.0</Version>
     </PackageReference>
@@ -142,13 +144,21 @@
       <Version>1.1.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.1.12</Version>
+    </PackageReference>
+    <PackageReference Include="SQLite.net-PCL">
+      <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="SQLitePCL">
+      <Version>3.8.7.2</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite">
       <Version>1.0.110</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

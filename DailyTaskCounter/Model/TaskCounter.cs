@@ -3,15 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLitePCL;
+using System.Diagnostics;
+using SQLite.Net.Attributes;
 
 namespace DailyTaskCounter.Model
 {
-    class TaskCounter
+   public class TaskCounter
     {
-        private decimal callcount { get; set; }
-        private decimal reached { get; set; }
-        private decimal appointment { get; set; }
-        private decimal progress { get; set; }
-        private DateTime date { get; set; }
+
+        [PrimaryKey]
+        public string date { get; set; }
+        public decimal callcount { get; set; }
+        public decimal reached { get; set; }
+        public decimal appointment { get; set; }
+        public decimal progress { get; set; }
+
+        public TaskCounter()
+        {
+        }
+
+        public TaskCounter(string date,object call,decimal reached, decimal appointment,decimal progress)
+        {
+            this.date = date;
+            this.reached = reached;
+            this.appointment = appointment;
+            this.progress = progress;
+        }
+
     }
+    
 }

@@ -20,7 +20,7 @@
         <TextBlock Grid.Column="0" FontWeight="Bold" 
                Text="Task Counter v1.0" HorizontalAlignment="Left" VerticalAlignment="top" Margin="10" Foreground="#B7B7B7" FontSize="9" FontFamily="Cooper Black"/>
 
-        <CalendarDatePicker x:Name="datePicker" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <CalendarDatePicker x:Name="datePicker" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" DateChanged="datePicker_DateChanged" />
 
         <Grid x:Name="title" Grid.Row="1" Background="#3B3B3B">
             <Grid.ColumnDefinitions>
@@ -107,7 +107,7 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="SaveSessionBTN" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Background="#53A3FF" Content="Save The Session" Foreground="White" 
-                    FontSize="30"  Margin="10" BorderBrush="#615F5F"  FontWeight="Bold"/>
+                    FontSize="30"  Margin="10" BorderBrush="#615F5F"  FontWeight="Bold" Click="SaveSessionBTN_Click"/>
             <Button x:Name="ResetBTN" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Background="#FF6E6E" Content="Reset" Foreground="White" 
                     FontSize="30"  Margin="10" BorderBrush="#615F5F"  FontWeight="Bold" Click="ResetBTN_Click"/>
