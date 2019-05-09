@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using DailyTaskCounter.Model;
 using System.Linq;
 using Windows.UI.Popups;
+using DailyTaskCounter.pages;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -34,6 +35,27 @@ namespace DailyTaskCounter
             dbAccess();
             getDataFromDate(date);
             dumpDBtoMemory();
+        }
+        private void hambergerButton_Click(object sender, RoutedEventArgs e)
+        {
+            Hb_menu.IsPaneOpen = true;
+            hambergerButton.Visibility = Visibility.Collapsed;
+            hambergerButtonClose.Visibility = Visibility.Visible;
+        }
+        private void hambergerButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            Hb_menu.IsPaneOpen = false;
+            hambergerButton.Visibility = Visibility.Visible;
+            hambergerButtonClose.Visibility = Visibility.Collapsed;
+        }
+        private void mainViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void reportViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ReportPage));
         }
         private void datetimePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
         {
@@ -193,6 +215,7 @@ namespace DailyTaskCounter
                 ProgressLable.Text = progress.ToString(("F"));
             }
         }
-        
+
+    
     }
 }
