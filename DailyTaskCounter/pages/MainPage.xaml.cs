@@ -50,9 +50,8 @@ namespace DailyTaskCounter
         }
         private void mainViewButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MainPage));
+          
         }
-
         private void reportViewButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ReportPage));
@@ -169,6 +168,14 @@ namespace DailyTaskCounter
             ReachedCountLable.Text = reached.ToString();
             AppointmentCountLable.Text = appointment.ToString();
             ProgressLable.Text = progress.ToString(("F"));
+            var add = conn.InsertOrReplace(new TaskCounter()
+            {
+                date = date,
+                callcount = callcount,
+                reached = reached,
+                appointment = appointment,
+                progress = progress
+            });
         }
         private async void SaveSessionBTN_Click(object sender, RoutedEventArgs e)
         {

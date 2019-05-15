@@ -47,7 +47,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" FontWeight="Bold" 
                Text="Task Counter v2.0" HorizontalAlignment="Left" VerticalAlignment="top" Margin="10" Foreground="#B7B7B7" FontSize="9" FontFamily="Cooper Black"/>
-                <ListBox Background="#AAAAAA" Margin="30"/>
+                <ListBox x:Name="listBox" Background="#AAAAAA" Margin="30"/>
                 <Grid x:Name="title" Grid.Row="1" Background="#3B3B3B">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />

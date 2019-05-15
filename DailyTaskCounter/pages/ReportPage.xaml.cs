@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DailyTaskCounter.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,10 +23,15 @@ namespace DailyTaskCounter.pages
     /// </summary>
     public sealed partial class ReportPage : Page
     {
+        string path;
+        SQLite.Net.SQLiteConnection conn;
+        private List<TaskCounter> taskCounters = new List<TaskCounter>();
         public ReportPage()
         {
             this.InitializeComponent();
-
+            dbAccess();
+            getDataFromDB();
+            getList();
         }
 
         private void hambergerButton_Click(object sender, RoutedEventArgs e)
@@ -48,7 +54,28 @@ namespace DailyTaskCounter.pages
 
         private void reportViewButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(ReportPage));
+
+        }
+        public void dbAccess()
+        {
+            path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "TaskConuterDB.sqlite");
+            conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
+            conn.CreateTable<TaskCounter>();
+        }
+        public void getDataFromDB()
+        {
+            var query = from task in conn.Table<TaskCounter>() select task;
+            foreach (var task in query)
+            {
+                taskCounters.Add(task);
+            }
+        }
+        public void getList()
+        {
+            foreach (var task in taskCounters)
+            {
+                listBox.Items.Add(task.ToString());
+            }
         }
     }
 }

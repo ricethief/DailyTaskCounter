@@ -30,6 +30,10 @@ namespace DailyTaskCounter.Model
             this.appointment = appointment;
             this.progress = progress;
         }
+        public override string ToString()
+        {
+            return "Date: " + date + "| Calls: " + callcount + "| Reched Phone Calls: " + reached;
+        }
 
     }
     
