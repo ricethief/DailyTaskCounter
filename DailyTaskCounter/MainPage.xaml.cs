@@ -17,6 +17,7 @@ namespace DailyTaskCounter
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        //nasted variable
         string path;
         SQLite.Net.SQLiteConnection conn;
         private List<TaskCounter> taskCounters = new List<TaskCounter>();
@@ -25,96 +26,135 @@ namespace DailyTaskCounter
         private decimal reached;
         private decimal appointment;
         private decimal progress;
-      
 
+        //MainPageFunction
         public MainPage()
         {
             this.InitializeComponent();
-            date = DateTime.Now.Date.ToString("M/d/yyyy");
+            date = GetToday();
             dbAccess();
             getDataFromDate(date);
             dumpDBtoMemory();
         }
+      
+        //Selected Date Changed event handler
         private void datetimePicker_DateChanged(object sender, DatePickerValueChangedEventArgs e)
         {
             Reset();
-            date = datetimepicker.Date.ToString("d");
+            date = GetDatePickerDate(datetimepicker);
             getDataFromDate(date);
             dumpDBtoMemory();
         }
+        //Add Call Event handler
         private void CallAddBTN_Click(object sender, RoutedEventArgs e)
         {
             decimal _callcount = Convert.ToDecimal(CallCountLable.Text);
-            _callcount++;
-            callcount = _callcount;
+            callcount = AddCount(_callcount);
             CallCountLable.Text = callcount.ToString();
             GetProgress(callcount, reached);
         }
+        //subtract Call Event handler
         private void CallSubtractBTN_Click(object sender, RoutedEventArgs e)
         {
             decimal _callcount = Convert.ToDecimal(CallCountLable.Text);
-            if (0 < _callcount)
-            {
-                _callcount--;
-                callcount = _callcount;
-                CallCountLable.Text = callcount.ToString();
-            }
-            else
-            {
-                callcount = _callcount;
-                CallCountLable.Text = callcount.ToString();
-            }
+            callcount = SubtractCount(_callcount);
+            CallCountLable.Text = callcount.ToString();
             GetProgress(callcount, reached);
         }
+        //Add Reached Event handler
         private void ReachedAddBTN_Click(object sender, RoutedEventArgs e)
         {
             decimal _reached = Convert.ToDecimal(ReachedCountLable.Text);
-            _reached++;
-            reached = _reached;
+            reached = AddCount(_reached);
             ReachedCountLable.Text = reached.ToString();
             GetProgress(callcount, reached);
         }
+        //Subtract Reached Event handler
         private void ReachedSubtractBTN_Click(object sender, RoutedEventArgs e)
         {
             decimal _reached = Convert.ToDecimal(ReachedCountLable.Text);
-            if (0 < _reached)
-            {
-                _reached--;
-                reached = _reached;
-                ReachedCountLable.Text = reached.ToString();
-            }
-            else
-            {
-                reached = _reached;
-                ReachedCountLable.Text = reached.ToString();
-            }
+            reached = SubtractCount(_reached);
+            ReachedCountLable.Text = reached.ToString();
             GetProgress(callcount, reached);
         }
+        //Add Appointment Event handler
         private void AppointmentAddBTN_Click(object sender, RoutedEventArgs e)
         {
             decimal _appointment = Convert.ToDecimal(AppointmentCountLable.Text);
-            _appointment++;
-            appointment = _appointment;
+            appointment = AddCount(_appointment);
             AppointmentCountLable.Text = appointment.ToString();
             GetProgress(callcount, reached);
         }
+        //Subtract Appointment Event handler
         private void AppointmentSubtractBTN_Click(object sender, RoutedEventArgs e)
         {
             decimal _appointment = Convert.ToDecimal(AppointmentCountLable.Text);
-            if (0 < _appointment)
+            appointment = SubtractCount(_appointment);
+            AppointmentCountLable.Text = appointment.ToString();
+            GetProgress(callcount, reached);
+        }
+        //Save Session Event handler
+        private async void SaveSessionBTN_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new MessageDialog("Session Saved");
+            message.Commands.Add(new UICommand("OK"));
+            await message.ShowAsync();
+            InsertOrReplace(date,callcount,reached,appointment,progress);
+        }
+        //Reset Event handler
+        private async void ResetBTN_Click(object sender, RoutedEventArgs e)
+        {
+            var message = new MessageDialog("Are you sure you want to Reset");
+            message.Commands.Add(new UICommand("OK", null));
+            message.Commands.Add(new UICommand("CANCEL", null));
+            message.DefaultCommandIndex = 0;
+            message.CancelCommandIndex = 1;
+            var cmd = await message.ShowAsync();
+            if (cmd.Label == "OK")
             {
-                _appointment--;
-                appointment = _appointment;
-                AppointmentCountLable.Text = appointment.ToString();
+                Reset();
+                InsertOrReplace(date, callcount, reached, appointment, progress);
+            }
+        }
+        
+        //get current date
+        public string GetToday()
+        {
+            string today = DateTime.Now.Date.ToString("M/d/yyyy");
+            return today;
+        }
+        //get datepicker's date
+        public string GetDatePickerDate(DatePicker _datePicker)
+        {
+            string today = _datePicker.Date.ToString("d");
+            return today;
+        }
+        //add
+        public decimal AddCount(decimal value)
+        {
+            decimal result;
+            value++;
+            result = value;
+            return result;
+        }
+        //subtract
+        public decimal SubtractCount(decimal value)
+        {
+            decimal result;
+            if (0 < value)
+            {
+                value--;
+                result = value;
 
             }
             else
             {
-                appointment = _appointment;
-                AppointmentCountLable.Text = appointment.ToString();
+                result = 0;
             }
-            GetProgress(callcount, reached);
+            return result;
+           
         }
+        //get progress
         public void GetProgress(decimal call, decimal reached)
         {
             if (call != 0)
@@ -124,19 +164,19 @@ namespace DailyTaskCounter
             }
             else ProgressLable.Text = "0";
         }
-        private async void ResetBTN_Click(object sender, RoutedEventArgs e)
+        //insertOrReplace date
+        public void InsertOrReplace(string date, decimal callcaount, decimal reached, decimal appointment, decimal progress)
         {
-            var message = new MessageDialog("Are you sure you want to Reset");
-            message.Commands.Add(new UICommand("OK",null));
-            message.Commands.Add(new UICommand("CANCEL",null));
-            message.DefaultCommandIndex = 0;
-            message.CancelCommandIndex = 1;
-            var cmd = await message.ShowAsync();
-            if (cmd.Label == "OK")
+            var add = conn.InsertOrReplace(new TaskCounter()
             {
-                Reset();
-            }
+                date = date,
+                callcount = callcount,
+                reached = reached,
+                appointment = appointment,
+                progress = progress
+            });
         }
+        //Reset
         public void Reset()
         {
             callcount = 0;
@@ -148,21 +188,7 @@ namespace DailyTaskCounter
             AppointmentCountLable.Text = appointment.ToString();
             ProgressLable.Text = progress.ToString(("F"));
         }
-        private async void SaveSessionBTN_Click(object sender, RoutedEventArgs e)
-        {
-            var message = new MessageDialog("Session Saved");
-            message.Commands.Add(new UICommand("OK"));
-            await message.ShowAsync();
-
-            var add = conn.InsertOrReplace(new TaskCounter()
-            {
-                date = date,
-                callcount = callcount,
-                reached = reached,
-                appointment = appointment,
-                progress = progress
-            });
-        }
+        //Get data from DB where selected date is 
         public void getDataFromDate (string _date)
         {
 
@@ -172,12 +198,14 @@ namespace DailyTaskCounter
                 taskCounters.Add(task);
             }
         }
+        //SQLite Path and connection
         public void dbAccess()
         {
             path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "TaskConuterDB.sqlite");
             conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
             conn.CreateTable<TaskCounter>();
         }
+        //Dumping data drom DB to nasted values
         public void dumpDBtoMemory()
         {
             foreach (var item in taskCounters.Where(d => d.date == date) )
@@ -193,6 +221,5 @@ namespace DailyTaskCounter
                 ProgressLable.Text = progress.ToString(("F"));
             }
         }
-        
     }
 }
