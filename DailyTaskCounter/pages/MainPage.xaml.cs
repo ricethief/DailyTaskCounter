@@ -206,14 +206,6 @@ namespace DailyTaskCounter
             ReachedCountLable.Text = reached.ToString();
             AppointmentCountLable.Text = appointment.ToString();
             ProgressLable.Text = progress.ToString(("F"));
-            var add = conn.InsertOrReplace(new TaskCounter()
-            {
-                date = date,
-                callcount = callcount,
-                reached = reached,
-                appointment = appointment,
-                progress = progress
-            });
         }
         //Get data from DB where selected date is 
         public void getDataFromDate (string _date)
