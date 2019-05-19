@@ -181,7 +181,7 @@ namespace DailyTaskCounter
         //get progress
         public static decimal GetProgress(decimal call, decimal reached, TextBlock lableName)
         {
-            decimal _progress = 0;
+            decimal _progress;
             if (call != 0)
             {
                 _progress = (reached / call) * 100;
@@ -189,6 +189,20 @@ namespace DailyTaskCounter
                 return _progress;
             }
             else lableName.Text = "0";
+
+            return _progress = 0;
+        }
+        public static decimal GetProgress(decimal call, decimal reached)
+        {
+            decimal _progress = 0;
+            string result = "";
+            if (call != 0)
+            {
+                _progress = (reached / call) * 100;
+                result = _progress.ToString("F");
+                return _progress;
+            }
+            result = "0";
 
             return _progress;
         }
@@ -222,6 +236,18 @@ namespace DailyTaskCounter
                 ReachedCountLable.Text = _reached.ToString();
                 AppointmentCountLable.Text = _appointment.ToString();
                 ProgressLable.Text = _progress.ToString(("F"));
+                return "Reset success";
+            }
+            catch { return "Reset fail"; }
+        }
+        public static string Reset(decimal _callcount, decimal _reached, decimal _appointment, decimal _progress)
+        {
+            try
+            {
+                _callcount = 0;
+                _reached = 0;
+                _appointment = 0;
+                _progress = 0;
                 return "Reset success";
             }
             catch { return "Reset fail"; }
