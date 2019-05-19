@@ -58,7 +58,6 @@ namespace UnitTestProject2
             Assert.AreEqual(0, result);
         }
         [TestMethod]
-
         public void Testing7_dbAccess()
         {
             string path;
@@ -94,7 +93,8 @@ namespace UnitTestProject2
 
             Assert.AreEqual(expected, result);
         }
-        public void Testing10_getDataFromDate()
+        [TestMethod]
+        public void Testing_10_getDataFromDate()
         {
             string path;
             SQLite.Net.SQLiteConnection conn;
@@ -105,7 +105,7 @@ namespace UnitTestProject2
             string Inserted_Data = MainPage.InsertOrReplace("5/19/2019", 1, 1, 1, 1, conn);
 
             List<TaskCounter> e = new List<TaskCounter>();
-            e = MainPage.getDataFromDate("5/19/2019", conn, e);
+            e = MainPage.GetDataFromDate("5/19/2019", conn, e);
 
             decimal result = e.Count;
             decimal expected =1;

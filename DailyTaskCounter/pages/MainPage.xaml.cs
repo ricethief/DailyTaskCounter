@@ -35,7 +35,7 @@ namespace DailyTaskCounter
             this.InitializeComponent();
             date = GetToday();
             dbAccess(path, conn);
-            taskCounters = getDataFromDate(date, conn, taskCounters);
+            taskCounters = GetDataFromDate(date, conn, taskCounters);
             dumpDBtoMemory();
         }
         private void hambergerButton_Click(object sender, RoutedEventArgs e)
@@ -62,7 +62,7 @@ namespace DailyTaskCounter
         {
             Reset(callcount, reached, appointment, progress, CallCountLable, ReachedCountLable, AppointmentCountLable, ProgressLable);
             date = GetDatePickerDate(datetimepicker);
-            taskCounters = getDataFromDate(date, conn, taskCounters);
+            taskCounters = GetDataFromDate(date, conn, taskCounters);
             dumpDBtoMemory();
         }
         //Add Call Event handler
@@ -71,7 +71,7 @@ namespace DailyTaskCounter
             decimal _callcount = Convert.ToDecimal(CallCountLable.Text);
             callcount = AddCount(_callcount);
             CallCountLable.Text = callcount.ToString();
-            GetProgress(callcount, reached, ProgressLable);
+            progress = GetProgress(callcount, reached, ProgressLable);
         }
         //subtract Call Event handler
         private void CallSubtractBTN_Click(object sender, RoutedEventArgs e)
@@ -79,7 +79,7 @@ namespace DailyTaskCounter
             decimal _callcount = Convert.ToDecimal(CallCountLable.Text);
             callcount = SubtractCount(_callcount);
             CallCountLable.Text = callcount.ToString();
-            GetProgress(callcount, reached, ProgressLable);
+            progress = GetProgress(callcount, reached, ProgressLable);
         }
         //Add Reached Event handler
         private void ReachedAddBTN_Click(object sender, RoutedEventArgs e)
@@ -87,7 +87,7 @@ namespace DailyTaskCounter
             decimal _reached = Convert.ToDecimal(ReachedCountLable.Text);
             reached = AddCount(_reached);
             ReachedCountLable.Text = reached.ToString();
-            GetProgress(callcount, reached, ProgressLable);
+            progress = GetProgress(callcount, reached, ProgressLable);
         }
         //Subtract Reached Event handler
         private void ReachedSubtractBTN_Click(object sender, RoutedEventArgs e)
@@ -95,7 +95,7 @@ namespace DailyTaskCounter
             decimal _reached = Convert.ToDecimal(ReachedCountLable.Text);
             reached = SubtractCount(_reached);
             ReachedCountLable.Text = reached.ToString();
-            GetProgress(callcount, reached, ProgressLable);
+            progress = GetProgress(callcount, reached, ProgressLable);
         }
         //Add Appointment Event handler
         private void AppointmentAddBTN_Click(object sender, RoutedEventArgs e)
@@ -103,7 +103,7 @@ namespace DailyTaskCounter
             decimal _appointment = Convert.ToDecimal(AppointmentCountLable.Text);
             appointment = AddCount(_appointment);
             AppointmentCountLable.Text = appointment.ToString();
-            GetProgress(callcount, reached, ProgressLable);
+            progress = GetProgress(callcount, reached, ProgressLable);
         }
         //Subtract Appointment Event handler
         private void AppointmentSubtractBTN_Click(object sender, RoutedEventArgs e)
@@ -111,7 +111,7 @@ namespace DailyTaskCounter
             decimal _appointment = Convert.ToDecimal(AppointmentCountLable.Text);
             appointment = SubtractCount(_appointment);
             AppointmentCountLable.Text = appointment.ToString();
-            GetProgress(callcount, reached, ProgressLable);
+            progress = GetProgress(callcount, reached, ProgressLable);
         }
         //Save Session Event handler
         private async void SaveSessionBTN_Click(object sender, RoutedEventArgs e)
@@ -207,7 +207,7 @@ namespace DailyTaskCounter
             return _progress;
         }
         //insertOrReplace date
-        public static string InsertOrReplace(string _date, decimal _c, decimal reached, decimal appointment, decimal progress, SQLite.Net.SQLiteConnection conn)
+        public static string InsertOrReplace(string _date, decimal _c, decimal _reached, decimal _appointment, decimal _progress, SQLite.Net.SQLiteConnection conn)
         {
             try
             {
@@ -215,9 +215,9 @@ namespace DailyTaskCounter
                 {
                     date = _date,
                     callcount = _c,
-                    reached = reached,
-                    appointment = appointment,
-                    progress = progress
+                    reached = _reached,
+                    appointment = _appointment,
+                    progress = _progress
                 });
                 return "Data Insert success";
             }
@@ -253,7 +253,7 @@ namespace DailyTaskCounter
             catch { return "Reset fail"; }
         }
         //Get data from DB where selected date is 
-        public static List<TaskCounter> getDataFromDate(string _date, SQLite.Net.SQLiteConnection _conn, List<TaskCounter> _taskCounters)
+        public static List<TaskCounter> GetDataFromDate(string _date, SQLite.Net.SQLiteConnection _conn, List<TaskCounter> _taskCounters)
         {
             try
             {
