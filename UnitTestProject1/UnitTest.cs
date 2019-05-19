@@ -1,20 +1,20 @@
 ﻿
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using Xunit;
 
 namespace UnitTestProject1
 {
-    [TestClass]
+  
     public class UnitTest1
     {
-        [TestMethod]
+        [Fact]
         public void TestMethod2()
         {
           //  DailyTaskCounter.MainPage mainPage = new DailyTaskCounter.MainPage();
 
         }
-
-        [TestMethod]
+        [Fact]
         public void TestMethod1()
         {
             ss p = new ss();
@@ -22,7 +22,7 @@ namespace UnitTestProject1
             decimal b = 20;
 
             decimal sum = p.AddNumber(a, b);
-            Assert.AreEqual(sum, 31);
+            Assert.Equal(31, sum);
         }
     }
     public class ss

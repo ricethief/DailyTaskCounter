@@ -4,28 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
+
 
 namespace DailyTaskCounter.Model
 {
-    [TestFixture]
+   
     public class UnitTest1
     {
-        [TestCase]
-        public void TestMethod1()
+       
+        public void TestMethod2()
         {
-            //MainPage m = new MainPage();
-            //string today = m.GetToday();
+            //  DailyTaskCounter.MainPage mainPage = new DailyTaskCounter.MainPage();
 
-            Program p = new Program();
-            decimal a = 10;
-            decimal b = 20;
-
-            decimal sum = p.AddNumber(a, b);
-            Assert.AreEqual(sum, 30);
         }
+
+       
+        //public void TestMethod1()
+        //{
+        //    ss p = new ss();
+        //    decimal a = 10;
+        //    decimal b = 20;
+
+        //    decimal sum = p.AddNumber(a, b);
+        //    Assert.AreEqual(sum, 31);
+        //}
     }
-    public class Program
+    public class ss
     {
         public decimal AddNumber(decimal a, decimal b)
         {
