@@ -8,7 +8,6 @@ using System.Linq;
 using Windows.UI.Popups;
 using DailyTaskCounter.pages;
 
-
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace DailyTaskCounter
@@ -51,7 +50,7 @@ namespace DailyTaskCounter
         }
         private void mainViewButton_Click(object sender, RoutedEventArgs e)
         {
-          
+
         }
         private void reportViewButton_Click(object sender, RoutedEventArgs e)
         {
@@ -118,7 +117,7 @@ namespace DailyTaskCounter
             var message = new MessageDialog("Session Saved");
             message.Commands.Add(new UICommand("OK"));
             await message.ShowAsync();
-            InsertOrReplace(date,callcount,reached,appointment,progress);
+            InsertOrReplace(date, callcount, reached, appointment, progress);
         }
         //Reset Event handler
         private async void ResetBTN_Click(object sender, RoutedEventArgs e)
@@ -135,9 +134,9 @@ namespace DailyTaskCounter
                 InsertOrReplace(date, callcount, reached, appointment, progress);
             }
         }
-        
+
         //get current date
-        public string GetToday()
+        public static string GetToday()
         {
             string today = DateTime.Now.Date.ToString("M/d/yyyy");
             return today;
@@ -171,7 +170,7 @@ namespace DailyTaskCounter
                 result = 0;
             }
             return result;
-           
+
         }
         //get progress
         public void GetProgress(decimal call, decimal reached)
@@ -208,7 +207,7 @@ namespace DailyTaskCounter
             ProgressLable.Text = progress.ToString(("F"));
         }
         //Get data from DB where selected date is 
-        public void getDataFromDate (string _date)
+        public void getDataFromDate(string _date)
         {
 
             var query = from task in conn.Table<TaskCounter>() where task.date == _date select task;
@@ -227,7 +226,7 @@ namespace DailyTaskCounter
         //Dumping data drom DB to nasted values
         public void dumpDBtoMemory()
         {
-            foreach (var item in taskCounters.Where(d => d.date == date) )
+            foreach (var item in taskCounters.Where(d => d.date == date))
             {
                 this.callcount = item.callcount;
                 this.reached = item.reached;
@@ -240,6 +239,11 @@ namespace DailyTaskCounter
                 ProgressLable.Text = progress.ToString(("F"));
             }
         }
+
         
+    
+
     }
+
+
 }
