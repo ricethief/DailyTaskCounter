@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:charts="using:CrossPieCharts.UWP.PieCharts"
+    xmlns:model="using:DailyTaskCounter.Model"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 
@@ -58,6 +60,15 @@
                 </Grid>
 
                 <Grid Grid.Row="2" Background="#AAAAAA">
+                    <charts:RichPieChart Radius="70" StrokeThickness="50"
+                                         PieChartArgsCollection="{Binding PieChartCollection}">
+                        <charts:RichPieChart.DataContext>
+                            <model:ReportView/>
+                        </charts:RichPieChart.DataContext>
+                    </charts:RichPieChart>
+                    <TextBlock x:Name="PercentageLable" HorizontalAlignment="Center" Text="{x:Bind model:ReportView.totalProgress}" TextWrapping="Wrap" VerticalAlignment="Center">
+                        
+                    </TextBlock>
                 </Grid>
                 <Grid Grid.Row="3" Background="#AAAAAA">
                 </Grid>

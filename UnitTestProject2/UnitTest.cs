@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DailyTaskCounter;
 using DailyTaskCounter.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UnitTestProject2
 {
@@ -16,7 +17,7 @@ namespace UnitTestProject2
         public void Testing1_GetToday()
         {
             string today = MainPage.GetToday();
-            Assert.AreEqual(("5/19/2019").ToString(), today);
+            Assert.AreEqual(("5/22/2019").ToString(), today);
         }
         [TestMethod]
         public void Testing2_AddCount()
@@ -87,11 +88,30 @@ namespace UnitTestProject2
         [TestMethod]
         public void Testing9_Reset()
         {
+            List<TaskCounter> taskCounters = new List<TaskCounter>();
+            string path;
+            SQLite.Net.SQLiteConnection conn;
+            path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "TaskConuterDB.sqlite");
+            conn = new SQLite.Net.SQLiteConnection(new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT(), path);
+            MainPage.dbAccess(path, conn);
+            MainPage.InsertOrReplace("Test Date", 1, 1, 1, 1, conn);
+            //dummy data inserted
 
-            string result = MainPage.Reset(1, 1, 1, 1);
-            string expected = "Reset success";
+            decimal notExpected = 0;
+            decimal result = 0;
+            taskCounters = MainPage.GetDataFromDate("Test Date", conn, taskCounters);
+            foreach (var item in taskCounters.Where(d => d.date == "Test Date"))
+            {
+                 notExpected = item.callcount;
+            }
+            MainPage.Reset(1, 1, 1, 1);
 
-            Assert.AreEqual(expected, result);
+            taskCounters = MainPage.GetDataFromDate("Test Date", conn, taskCounters);
+            foreach (var item in taskCounters.Where(d => d.date == "Test Date"))
+            {
+                 result = item.callcount;
+            }
+            Assert.AreNotEqual(notExpected, result);
         }
         [TestMethod]
         public void Testing_10_getDataFromDate()

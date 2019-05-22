@@ -102,7 +102,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Class1.cs" />
+    <Compile Include="Model\ReportView.cs" />
     <Compile Include="pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -142,6 +142,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CrossPieCharts.UWP">
+      <Version>1.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Dapper">
       <Version>1.60.6</Version>
     </PackageReference>
